@@ -22,6 +22,7 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
       emit(LoadingState());
        try {
       await Future.delayed(Duration(seconds: 2));
+      
       List<TodoModel> todolist = await todoRepo.getAllToDo();
       emit(SuccessState(todolist: todolist));
     } catch (e) {
@@ -52,7 +53,7 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
       final response = await todoRepo.updateData(event.todo);
       if (response == 200) {
         emit(ResponseState(responseMsg: 'Todo updated successfully'));
-        add(InitialFetchEvents()); // Fetch updated list
+        add(InitialFetchEvents()); 
       } else {
         emit(ErrorState(errorMsg: 'Failed to update todo'));
       }

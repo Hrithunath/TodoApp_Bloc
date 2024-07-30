@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_app/bloc/todo_bloc.dart';
+import 'package:todo_app/view/edit_details.dart';
 
 class WidgetGridView extends StatelessWidget {
   final SuccessState state;
@@ -15,7 +16,7 @@ class WidgetGridView extends StatelessWidget {
         crossAxisCount: 2,
         mainAxisSpacing: 10,
         crossAxisSpacing: 10,
-        childAspectRatio: 3 / 2,
+        
       ),
       itemCount: state.todolist.length,
       itemBuilder: (context, index) {
@@ -47,13 +48,17 @@ class WidgetGridView extends StatelessWidget {
                   children: [
                     IconButton(
                       onPressed: () {
-                        // Implement edit functionality here
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => EditDetails(todo: todo),
+                          ),
+                        );
                       },
                       icon: const Icon(Icons.edit),
                     ),
                     IconButton(
                       onPressed: () {
-                        // BlocProvider.of<TodoBloc>(context).add(DeleteEvent(id: todo.id));
+                    context.read<TodoBloc>().add(DeleteEvent(id: todo.id!));
                       },
                       icon: const Icon(Icons.delete),
                     ),

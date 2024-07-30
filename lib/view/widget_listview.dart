@@ -1,42 +1,69 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_app/bloc/todo_bloc.dart';
 
-class widgetListView extends StatelessWidget {
+class WidgetGridView extends StatelessWidget {
   final SuccessState state;
-  const widgetListView({
-    super.key,required this.state
-  });
+
+  const WidgetGridView({super.key, required this.state});
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
+    return GridView.builder(
+      padding: const EdgeInsets.all(10),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        mainAxisSpacing: 10,
+        crossAxisSpacing: 10,
+        childAspectRatio: 3 / 2,
+      ),
+      itemCount: state.todolist.length,
       itemBuilder: (context, index) {
-        return Padding(
-          padding: const EdgeInsets.all(25),
-          child: Card(
-            child: ListTile(
-              leading: const CircleAvatar(),
-              title:const  Text('hello'), 
-              subtitle: const Text("hello"),
-              trailing: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.edit)
+        final todo = state.todolist[index];
+        return Card(
+          elevation: 5,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  todo.title ?? 'No Title',
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
                   ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.delete)
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  todo.description ?? 'No Description',
+                  style: const TextStyle(
+                    fontSize: 14,
                   ),
-                ],
-              ),
+                ),
+                const Spacer(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        // Implement edit functionality here
+                      },
+                      icon: const Icon(Icons.edit),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        // BlocProvider.of<TodoBloc>(context).add(DeleteEvent(id: todo.id));
+                      },
+                      icon: const Icon(Icons.delete),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
         );
       },
-      separatorBuilder: (context, index) => const Divider(),
-      itemCount: state.todolist.length,
     );
   }
 }

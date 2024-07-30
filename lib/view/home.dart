@@ -6,11 +6,9 @@ import 'package:todo_app/view/add_details.dart';
 import 'package:todo_app/view/widget_listview.dart';
 
 class Home extends StatelessWidget {
-  
   Home({super.key});
   late Future<List<TodoModel>> todolist;
-  
- 
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -25,7 +23,7 @@ class Home extends StatelessWidget {
             if (state is ResponseState) {
               ScaffoldMessenger.of(context).hideCurrentSnackBar();
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(state.responseMsg))
+                SnackBar(content: Text(state.responseMsg)),
               );
             }
           },
@@ -33,7 +31,7 @@ class Home extends StatelessWidget {
             if (state is LoadingState) {
               return const Center(child: CircularProgressIndicator());
             } else if (state is SuccessState) {
-              return widgetListView(state: state);
+              return WidgetGridView(state: state);
             } else if (state is ErrorState) {
               return Center(child: Text(state.errorMsg));
             } else {
@@ -44,7 +42,7 @@ class Home extends StatelessWidget {
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => AddDetails())
+              MaterialPageRoute(builder: (context) => AddDetails()),
             );
           },
           child: const Icon(Icons.add),

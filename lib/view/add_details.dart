@@ -34,12 +34,12 @@ class AddDetails extends StatelessWidget {
                   ),
                 ),
               );
-            } else if (state is ResponseState) {
+            } else if (state is SuccessState) {
               Navigator.of(context).pop();
               Navigator.of(context).pop(true);
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(state.responseMsg)),
-              );
+              // ScaffoldMessenger.of(context).showSnackBar(
+              //   SnackBar(content: Text(state.m)),
+              // );
             }
           },
           child: Column(
@@ -65,18 +65,8 @@ class AddDetails extends StatelessWidget {
                   ),
                 ),
               ),
-              ElevatedButton(
-                onPressed: () => saveButton(context),
-                child: const Text('Save'),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+             ElevatedButton(onPressed: (){
 
-  void saveButton(BuildContext context) {
     final title = titleController.text;
     final description = descriptionController.text;
 
@@ -88,5 +78,14 @@ class AddDetails extends StatelessWidget {
         const SnackBar(content: Text('Please fill all fields')),
       );
     }
+             }, child: Text('Save'))
+            ],
+          ),
+        ),
+      ),
+    );
   }
+
+  
+  
 }

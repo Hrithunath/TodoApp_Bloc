@@ -10,6 +10,7 @@ class Home extends StatelessWidget {
   Home({super.key});
   late Future<List<TodoModel>> todolist;
   
+ 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -36,7 +37,7 @@ class Home extends StatelessWidget {
             } else if (state is ErrorState) {
               return Center(child: Text(state.errorMsg));
             } else {
-              return const SizedBox();
+              return const Text('');
             }
           },
         ),
@@ -52,4 +53,3 @@ class Home extends StatelessWidget {
     );
   }
 }
-
